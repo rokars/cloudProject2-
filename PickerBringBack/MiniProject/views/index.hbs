@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>{{ title }}</title>
+      <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+
+  <body style="width: 500px;">
+    <h1>Cloud mini project</h1>
+    <br>
+    <br>
+    <h2>Run Server Program</h2>
+    <form style="border: 2px solid blue; padding: 3px;" action="/runServerprogram" method="post">
+      <label>Server command: </label> <input type="text" name="srvCommand" value="">
+      <br>
+      <input type="submit" value="Run Server Command">
+    </form>
+    <br>
+    <div style="background: #e0e0e0; padding: 5px; border: 2px solid red;
+      border-radius: 10px;">{{ outputFromCommand }}
+    </div>
+    <br>
+    <br>
+  </body>
+</html>
