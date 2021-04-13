@@ -1,0 +1,29 @@
+Copy the nodejs folder onto your c: drive. 
+
+Inside the nodejs folder, open the installs folder, then open the atom folder and double click on: AtomSetup-x64.exe
+
+Inside the nodejs folder, open the installs folder and double click on: node-v10.13.0-x64.msi, then:
+- change the install directory to: 
+  c:\nodejs\installs\
+
+Create this directory: C:\data\db
+
+Then, inside the nodejs folder, double click mongo.bat, and then importScripts.bat (this sets up the 2 objects in the database). 
+
+In the nodejs folder, double click robo.bat, accept, enter dummy details. Next, click on Create and click Save and then Connect.
+
+OK, everything is now installed inclucing a sample project. The Atom icon should now be on your desktop (use this to edit your project). 
+
+
+
+
+
+
+To run:
+- in the nodejs folder (in this order):
+  - double click mongo.bat,
+  - double click robo.bat,
+  - double click npm.bat
+Then run Chrome and go to localhost:8000 to view the web site. 
+
+

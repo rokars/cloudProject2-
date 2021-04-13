@@ -1,0 +1,64 @@
+PART 1 Create a clean new local Expo project for native apps
+
+Instructions to deploy web app on AWS EC2 using next js for SSR of your SPA
+
+
+First, lets create a clean new local expo project:
+The first thing we need to do is to ensure that our web components contain ONLY web
+compatible components. MyChart is using the Picker component which isn't web compatible, 
+so it need to be re-written. I've already done this (its a bit of a mess at this stage 
+and need to be re-written), and I've already uploaded a zipped version of the clean 
+project discussed below (nativeNextSsrWebApp.zip). I've also uploaded a zipped version 
+of the cleaned up node-js MiniProject too. 
+
+cd c:\expoProjects
+expo init nativeNextSsrWebApp
+Press return/enter to select default (blank Managed Workflow)
+
+Now, lets check it on web (be patient, it will take a minute or two to start): 
+cd nativeNextSsrWebApp
+expo start -w
+and make sure you see it running on localhost:19006
+Hit CTRL C to exit back to the shell. Kill the associated browser tabs. 
+
+Now, lets add our existing app with the MyPicker amd MyChart components: 
+- in Atom (or your preferred IDE):
+  - File -> Add Project Folder 
+  - select nativeNextSsrWebApp
+- copy MyChart.js, MyChart.native.js, MyPicket.js, MyPicket.native.js, data.js
+- paste them into nativeNextSsrWebApp
+- delete App.js in nativeNextSsrWebApp, and then copy in the new App.js from our previous project
+- now, when we look into these 5 files to see what we need to install, we find:
+  - react-native-scrollable-tab-view
+  - react-native-chart-kit
+  - @babel/polyfill
+  - react-native-svg
+  - @react-navigation/native
+  - @react-navigation/stack
+- so, in the shell, make sure you're still in the nativeNextSsrWebApp directory and type: 
+  npm install --save react-native-svg 
+  npm install --save react-native-scrollable-tab-view
+  npm install --save @react-navigation/native
+  npm install --save @react-navigation/stack
+  npm install --save react-native-chart-kit
+  npm install --save @babel/polyfill
+- check it on web (be patient, it will take a minute or two to start): 
+  - expo start -w
+
+Ok, it should work BUT it's not connecting back to database. So, you'll need to run node and mongo. 
+I've created a minimal folder for this (MiniProject zipped) so download it. Backup your old MiniProject 
+if there is anything you need in there and then copy over the new one that you just downloaded. I'm 
+assuming you have already downloaded the nodejs folder which contains an executable for mongo, so open a 
+new shell and type:
+cmd /k C:\nodejs\installs\mongodb-win32-x86_64-2008plus-ssl-4.0.3\bin\mongod
+open a new shell and:
+- cd c:\nodejs\MiniProject
+npm start
+Check it by looking at localhost:8000
+Now, lets check it on expo web app (be patient, it will take a minute or two to start): 
+cd nativeNextSsrWebApp
+expo start -w
+
+Looks like I've re-introduced the bug with the picker not closing! I'll fix it later. But we need to move on:
+- lets get it on AWS with support for SSR using nextjs! 
+Hit CTRL C to exit back to the shell. Kill the associated browser tabs. 

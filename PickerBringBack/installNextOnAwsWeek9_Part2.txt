@@ -1,0 +1,125 @@
+PART 2 Deploy Web App on AWS EC2 using Next Js for SSR
+
+Instructions to deploy web app on AWS EC2 using next js for SSR of your SPA
+
+Create a new EC2 instance and open additional TCP ports:
+HTTP
+HTTPS
+8000
+3000
+19000-19010
+
+Log in using Putty and your .ppk key:
+sudo mkdir /db
+sudo mkdir /db/data
+sudo chmod 777 /db/data
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+. ~/.nvm/nvm.sh
+nvm install node
+sudo apt update
+sudo apt install -y mongodb
+The above installs node.js and MongoDb and also runs MongoDb in the background. 
+
+npm install --global expo-cli
+expo init nextJsSsrWebApp
+
+TEST IT
+cd nextJsSsrWebApp
+npm run web
+Wait a minute or two; in the browswer URL bar, type:
+http://ec2-54-195-189-55.eu-west-1.compute.amazonaws.com:19006/
+(you'll need the chage the EC2 URL to your own one).
+
+So far, so good! Now, hit CTRL C to stop Expo. 
+
+npm install --global yarn
+yarn add -D @expo/next-adapter
+yarn next-expo -f
+yarn next dev
+
+TEST IT
+In the browswer URL bar, type:
+http://ec2-54-195-189-55.eu-west-1.compute.amazonaws.com:3000/
+(you'll need the chage the EC2 URL to your own one).
+
+DOESN'T WORK!
+
+CTRL C
+cd ..
+sudo rm -r nextJsSsrWebApp
+npx create-react-native-app -t with-nextjs
+type: y
+type: nextJsSsrWebApp
+
+TEST IT
+cd nextJsSsrWebApp
+yarn next dev
+In the browswer URL bar, type:
+http://ec2-54-195-189-55.eu-west-1.compute.amazonaws.com:3000/
+
+WORKS!
+CTRL C
+
+Now nun WinScp and log in, using user name: ubuntu.
+
+Go into the pages directory and change the welcome message, save it, and see it updating!
+
+Copy our components over:
+- since this is a web app only, we don't need the native components,
+- so copy MyChart.js and MyPicket.js from nativeNextSsrWebApp on the PC into the pages 
+  directory on EC2
+- double click on App.js in nativeNextSsrWebApp and copy it all (CTRL A) and paste it 
+  into index.js in the pages directory on EC2 (CTRL V)
+- now lets take a look at those new files MyChart.js, MyPicket.js, and the new index.js: 
+  - the Next Js app already had installed react and react-native for us during set up, 
+    but the new files contain the following additional imports: 
+    - @react-navigation/stack
+    - @react-navigation/native
+    - react-native-svg
+  so we need to install these as follows on EC2: 
+    npm install --save react-native-svg 
+    npm install --save @react-navigation/native
+    npm install --save @react-navigation/stack
+- OK, we are ready to test:
+  yarn next dev
+
+TEST IT
+This fails because Next doesn't support local images by default (and the Navigator c
+omponent uses them). To fix this, see: https://docs.expo.io/guides/using-nextjs/
+Essentially: 
+CTRL C
+yarn add next-images
+This shouldn't cause issues, but it does! Fix with:
+  npm install --force
+  npm audit fix --force
+
+Copy this over the next.config.js (in the nativeNextSsrWebApp diretory) contents:
+const { withExpo } = require('@expo/next-adapter');
+const withImages = require('next-images');
+
+module.exports = withExpo(
+  withImages({
+    projectRoot: __dirname,
+  })
+);
+
+TEST AGAIN
+  yarn next dev
+
+WORKS
+
+So, carry on developing native apps on your PC and just copy over the new files to AWS 
+when they are working. Note, if you install any packages for Web components on the PC, 
+you'll have too install them on AWS as well. 
+
+
+Copy over your MiniProject directory to your home directory on EC2. 
+Duplicate your Putty shell.
+cd MiniProject
+npm start
+
+Change the fetch URL to your AWS URL in the index.js file. 
+
+TEST IT
+http://ec2-54-195-189-55.eu-west-1.compute.amazonaws.com:8000/
+
