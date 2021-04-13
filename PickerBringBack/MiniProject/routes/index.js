@@ -41,12 +41,30 @@ router.post('/runServerprogram', function(req, res, next) {
 });
 
 router.post('/getAppNames', function(req, res, next) {
-  let theObj = {names: ["John Doe", "Jane Doe", "John Doe 1", "Jane Doe 1",  "John Doe 2", "Jane Doe 2"],
+  let theObj = {names: ["John Doe", "Jane Doe", "John Doe 545", "Jane Doe 1",  "John Doe 2", "Jane Doe 2"],
                 flyFrom: ["Dublin", "Shannon", "Cork", "Belfast",  "Donegal", "Derry"],
                 flyTo: ["London", "Tenerife", "Faro", "Madrid",  "New York", "Boston"]};
-  console.log("Send data to App");
+  console.log("Send data to Appppppppppppppppp");
   console.log(theObj.names.length);
   res.status(201).send(theObj);
 });
 
-module.exports = router;
+router.post('/login', (request, response) =>{
+
+    const enteredUserValues = new userValuesCopy({
+        gearSalePrice:request.body.gearSalePrice,
+        totalMaterialSaleCost:request.body.totalMaterialSaleCost,
+        saleCommission:request.body.saleCommission,
+        saleDeposit:request.body.saleDeposit,
+        totalProfit:request.body.totalProfit
+    })
+    enteredUserValues.save()
+    .then(data =>{
+        response.json(data)
+    })
+    .catch(error =>{
+        response.json(data)
+    })
+})
+
+module.exports = router
