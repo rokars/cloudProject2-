@@ -1,0 +1,10 @@
+POST http://localhost:4000/app/login
+Content-Type: application/json
+
+{
+    "gearSalePrice":"200",
+    "totalMaterialSaleCost":"50",
+    "saleCommission":"0",
+    "saleDeposit":"10",
+    "totalSaleProfit":"100"
+}

@@ -3,17 +3,10 @@ var router = express.Router();
 var mongoose = require('mongoose');
 const { exec } = require('child_process');
 var url = require('url');
-
-mongoose.connect('localhost:27017/blogPosts');
-var Schema = mongoose.Schema;
+const userValuesCopy = require('../models/UserValues')
 
 // https://github.com/mschwarzmueller/nodejs-basics-tutorial/blob/master/11-mongoose/routes/index.js
 
-var userDataSchema = new Schema({
-  post: {type: String}
-}, {collection: 'posts'});
-
-var UserData = mongoose.model('UserData', userDataSchema);
 
 router.get('/', function(req, res, next) {
   res.render('index', {title: "CCC"});
@@ -49,22 +42,23 @@ router.post('/getAppNames', function(req, res, next) {
   res.status(201).send(theObj);
 });
 
-router.post('/login', (request, response) =>{
+router.post('/login', async (request, response) =>{
 
-    const enteredUserValues = new userValuesCopy({
-        gearSalePrice:request.body.gearSalePrice,
-        totalMaterialSaleCost:request.body.totalMaterialSaleCost,
-        saleCommission:request.body.saleCommission,
-        saleDeposit:request.body.saleDeposit,
-        totalProfit:request.body.totalProfit
-    })
-    enteredUserValues.save()
-    .then(data =>{
-        response.json(data)
-    })
-    .catch(error =>{
-        response.json(data)
-    })
-})
+  const logedinUser = new userValuesCopy({
+      gearSalePrice:request.body.gearSalePrice,
+      totalMaterialSaleCost:request.body.totalMaterialSaleCost,
+      saleCommission:request.body.saleCommission,
+      saleDeposit:request.body.saleDeposit,
+      totalSaleProfit:request.body.totalSaleProfit
+
+  });
+  logedinUser.save()
+  .then(data =>{
+      response.json(data)
+  })
+  .catch(error =>{
+      response.json(data)
+  });
+});
 
 module.exports = router
