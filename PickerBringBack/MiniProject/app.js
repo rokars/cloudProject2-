@@ -11,8 +11,7 @@ var cors = require('cors'); // https://dev.to/p0oker/why-is-my-browser-sending-a
 const app = express()
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
-const routesUrls = require('./routes/index')
-var routes = require('./routes/index');
+const routes = require('./routes/index')
 
 dotenv.config()
 
@@ -20,11 +19,10 @@ mongoose.connect(process.env.DATABASE_ACCESS, () =>console.log("DataBase Connect
 
 app.use(express.json())
 app.use(cors())
-app.use('/app', routesUrls)
+app.use('/app', routes)
 app.listen(4000, () => console.log("Server running"))
 
 
-/*
 // view engine setup
 app.engine('hbs', hbs({extname: 'hbs'}));
 app.set('views', path.join(__dirname, 'views'));
@@ -71,6 +69,6 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-*/
+
 
 module.exports = app;
