@@ -1,23 +1,23 @@
 const mongoose = require('mongoose')
 
 const userValues = new mongoose.Schema({
-    gearSalePrice:{
+    gearValue:{
         type:String,
         required:true
     },
-    totalMaterialSaleCost:{
+    commsion:{
         type:String,
         required:true
     },
-    saleCommission:{
+    deposit:{
         type:String,
         required:true
     },
-    saleDeposit:{
+    materialCost:{
         type:String,
         required:true
     },
-    totalSaleProfit:{
+    finalcost:{
         type:String,
         default:Date.now
     },

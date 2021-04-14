@@ -45,16 +45,17 @@ router.post('/getAppNames', function(req, res, next) {
 router.post('/login', async (request, response) =>{
 
   const logedinUser = new userValuesCopy({
-      gearSalePrice:request.body.gearSalePrice,
-      totalMaterialSaleCost:request.body.totalMaterialSaleCost,
-      saleCommission:request.body.saleCommission,
-      saleDeposit:request.body.saleDeposit,
-      totalSaleProfit:request.body.totalSaleProfit
+      gearValue:request.body.gearValue,
+      commsion:request.body.commsion,
+      deposit:request.body.deposit,
+      materialCost:request.body.materialCost,
+      finalcost:request.body.finalcost
 
   });
   logedinUser.save()
   .then(data =>{
       response.json(data)
+      console.log("HELL0")
   })
   .catch(error =>{
       response.json(data)

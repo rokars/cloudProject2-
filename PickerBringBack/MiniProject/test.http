@@ -2,9 +2,10 @@ POST http://localhost:4000/app/login
 Content-Type: application/json
 
 {
-    "gearSalePrice":"200",
-    "totalMaterialSaleCost":"50",
-    "saleCommission":"0",
-    "saleDeposit":"10",
-    "totalSaleProfit":"100"
+    "gearValue":"200",
+    "commsion":"50",
+    "deposit":"0",
+    "materialCost":"10",
+    "finalcost":"100"
 }
+
